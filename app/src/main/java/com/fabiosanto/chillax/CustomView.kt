@@ -17,9 +17,18 @@ import android.view.animation.AccelerateDecelerateInterpolator
 
 // game idea: fingers must be inside the flow, flow moves crazy
 
+interface MessageCallback {
+    fun onUpdate(text: String)
+}
+
+enum class Modes(val text: String){
+    IN("Breath In"), OUT("Breath Out")
+}
 
 class CustomView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
     // Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes
+
+    lateinit var callback: MessageCallback
 
     private val paint = Paint().apply {
         color = Color.BLACK
@@ -38,11 +47,7 @@ class CustomView(context: Context, attributeSet: AttributeSet) : View(context, a
             }
         }
 
-    init {
-    }
-
     override fun onDraw(canvas: Canvas) {
-
         canvas.drawRect(
             0f,
             measuredHeight - (measuredHeight * variable),
@@ -71,7 +76,7 @@ class CustomView(context: Context, attributeSet: AttributeSet) : View(context, a
                     Log.e("ACTION_MOVE", "GOING UP  ${event.y}")
                 else Log.e("ACTION_MOVE", "GOING DOWN  ${event.y}")
 
-                 lastMoveY = event.y
+                lastMoveY = event.y
 
                 return true
             }
