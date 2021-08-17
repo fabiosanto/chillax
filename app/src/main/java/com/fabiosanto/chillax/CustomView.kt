@@ -71,7 +71,7 @@ class CustomView(context: Context, attributeSet: AttributeSet) : View(context, a
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
-
+                animator.pause()
                 if (lastMoveY > event.y)
                     Log.e("ACTION_MOVE", "GOING UP  ${event.y}")
                 else Log.e("ACTION_MOVE", "GOING DOWN  ${event.y}")
